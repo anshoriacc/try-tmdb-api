@@ -1,6 +1,10 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const AuthRoutes = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+import useAuthStore from "../store/client/useAuth";
+
+const AuthRoutes: React.FC = () => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 

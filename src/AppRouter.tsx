@@ -1,30 +1,39 @@
-import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
 import AuthRoutes from "./components/AuthRoutes";
 import ProtectedRoutes from "./components/ProtectedRoutes";
-import useAuthStore from "./store/client/useAuth";
-
-const { isLoggedIn } = useAuthStore.getState();
+import LoginPage from "./pages/Login";
+import HomePage from "./pages/Home";
+import NotFoundPage from "./pages/404";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ProtectedRoutes isLoggedIn={isLoggedIn} />,
+    element: <ProtectedRoutes />,
     children: [
       {
         path: "",
-        element: <>home</>,
+        element: <HomePage />,
       },
     ],
   },
   {
-    element: <AuthRoutes isLoggedIn={isLoggedIn} />,
+    element: <AuthRoutes />,
     children: [
       {
-        path: "login",
-        element: <>login</>,
+        path: "signin",
+        element: <LoginPage />,
       },
     ],
   },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
 ]);
 
-export default router;
+const AppRouter = () => {
+  return <RouterProvider router={router} />;
+};
+
+export default AppRouter;

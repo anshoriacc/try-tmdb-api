@@ -1,15 +1,18 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RouterProvider } from "react-router-dom";
-import router from "./AppRouter";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient({
-  defaultOptions: { queries: { retry: 2 } },
-});
+import AppRouter from "./AppRouter";
+import AntdConfigProvider from "./components/AntdConfigProvider";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <AntdConfigProvider>
+        <AppRouter />
+      </AntdConfigProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
